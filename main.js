@@ -1,31 +1,34 @@
-const express = require("express");
-const { v4: uuidv4 } = require("uuid");
+const express = require('express');
+const { v4: uuidv4 } = require('uuid');
 
 const app = express();
 app.use(express.json());
 
 // Store todos in a variable
-const todos = [];
+let todos = [];
 
 // Method to create a standardized response
-const createResponse = (data, message) => {
-  return {
-    data,
-    meta: {
-      message
-    }
-  };
-};
+const createResponse = (data, message) => ({
+  data,
+  meta: {
+    message,
+  },
+});
 
 // Route to add a new todo
-app.post("/todos", (req, res) => {
+app.post('/todos', (req, res) => {
   try {
     const { title, description } = req.body;
     const timestamp = new Date().toISOString();
-    const newTodo = { id: uuidv4(), title, description, timestamp };
+    const newTodo = {
+      id: uuidv4(),
+      title,
+      description,
+      timestamp,
+    };
     todos.push(newTodo);
 
-    const response = createResponse(newTodo, "Todo added successfully");
+    const response = createResponse(newTodo, 'Todo added successfully');
 
     res.status(201).json(response);
   } catch (error) {
@@ -34,11 +37,11 @@ app.post("/todos", (req, res) => {
 });
 
 // Route to get all todos
-app.get("/todos", (req, res) => {
+app.get('/todos', (req, res) => {
   try {
     const response = createResponse(
       { todos, totalRecords: todos.length },
-      todos.length > 0 ? "Todos list found" : "No todos available"
+      todos.length > 0 ? 'Todos list found' : 'No todos available',
     );
     res.status(200).json(response);
   } catch (error) {
@@ -47,27 +50,27 @@ app.get("/todos", (req, res) => {
 });
 
 // Route to get a specific todo by ID
-app.get("/todos/:id", (req, res) => {
+app.get('/todos/:id', (req, res) => {
   try {
     const { id } = req.params;
-    const todo = todos.find((todo) => todo.id === id);
+    const todo = todos.find((item) => item.id === id);
     if (!todo) {
-      const response = createResponse({}, "No todo found with the given ID");
-      res.status(410).json(response);
+      const response = createResponse({}, 'No todo found with the given ID');
+      return res.status(410).json(response);
     }
-    const response = createResponse(todo, "Todo details found");
+    const response = createResponse(todo, 'Todo details found');
     return res.status(200).json(response);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    return res.status(500).json({ error: error.message });
   }
 });
 
 // Route to delete a specific todo by ID
-app.delete("/todos/:id", (req, res) => {
+app.delete('/todos/:id', (req, res) => {
   try {
     const { id } = req.params;
     todos = todos.filter((todo) => todo.id !== id);
-    const response = createResponse(null, "Todo deleted successfully");
+    const response = createResponse(null, 'Todo deleted successfully');
     res.status(200).json(response);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -75,20 +78,17 @@ app.delete("/todos/:id", (req, res) => {
 });
 
 // Route to update a specific todo by ID
-app.put("/todos/:id", (req, res) => {
+app.put('/todos/:id', (req, res) => {
   try {
     const { id } = req.params;
     const { title, description } = req.body;
     const todoIndex = todos.findIndex((todo) => todo.id === id);
     if (todoIndex !== -1) {
       todos[todoIndex] = { ...todos[todoIndex], title, description };
-      const response = createResponse(
-        todos[todoIndex],
-        "Todo updated successfully"
-      );
+      const response = createResponse(todos[todoIndex], 'Todo updated successfully');
       res.status(200).json(response);
     } else {
-      res.status(404).json({ message: "No todo found with the given ID" });
+      res.status(404).json({ message: 'No todo found with the given ID' });
     }
   } catch (error) {
     res.status(500).json({ error: error.message });
