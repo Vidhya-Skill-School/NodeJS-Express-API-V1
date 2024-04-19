@@ -1,13 +1,13 @@
-const apiTimeout = 4 * 1000;
-module.exports.apiTimeout = (req, res, next) => {
+const apiTimeoutVal = 4 * 1000;
+export const apiTimeout = (req, res, next) => {
   // Set the timeout for all HTTP requests
-  req.setTimeout(apiTimeout, () => {
+  req.setTimeout(apiTimeoutVal, () => {
     const err = new Error('Request Timeout');
     err.status = 408;
     next(err);
   });
   // Set the server response timeout for all HTTP requests
-  res.setTimeout(apiTimeout, () => {
+  res.setTimeout(apiTimeoutVal, () => {
     const err = new Error('Request Timeout');
     err.status = 408;
     next(err);
@@ -17,7 +17,7 @@ module.exports.apiTimeout = (req, res, next) => {
 };
 
 // timeoutMiddleware.js
-module.exports.timeoutMiddleware = (req, res, next) => {
+export const timeoutMiddleware = (req, res, next) => {
   const timeoutId = setTimeout(() => {
     if (!res.headersSent) {
       res.status(504).send('Request timed out');

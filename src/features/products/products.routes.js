@@ -1,6 +1,6 @@
-const express = require('express');
-const { apiTimeout, timeoutMiddleware } = require('./products.validator');
-const { getProducts } = require('./products.controller');
+import express from 'express';
+import { apiTimeout, timeoutMiddleware } from './products.validator';
+import { getProducts } from './products.controller';
 
 const productRouter = express.Router();
 
@@ -8,4 +8,4 @@ productRouter.get('/', apiTimeout, getProducts);
 
 productRouter.get('/test', timeoutMiddleware, getProducts);
 
-module.exports = productRouter;
+export default productRouter;
