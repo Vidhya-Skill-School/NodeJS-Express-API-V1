@@ -4,7 +4,7 @@ const express = require('express');
 const app = express();
 // Custom timeout handling middleware
 function timeoutMiddleware(timeout) {
-  return function (req, res, next) {
+  return (req, res, next) => {
     const timeoutId = setTimeout(() => {
       res.status(504).send({ message: 'Request timed out' });
     }, timeout);
@@ -25,7 +25,7 @@ app.get('/', timeoutMiddleware(2000), (req, res) => {
 });
 
 // Error handling middleware
-app.use((err, req, res, next) => {
+app.use((err, req, res) => {
   if (err) {
     res.status(500).send('Internal Server Error');
   }

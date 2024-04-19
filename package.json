@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon ./src/main.js",
+    "dev": "nodemon ./src/app3.js",
     "lint": "eslint --ext .js ./src/",
     "prepare": "husky"
   },
@@ -14,6 +14,8 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.18.3",
+    "express-timeout-handler": "^2.2.2",
+    "mongoose": "^8.3.2",
     "uuid": "^9.0.1"
   },
   "devDependencies": {
