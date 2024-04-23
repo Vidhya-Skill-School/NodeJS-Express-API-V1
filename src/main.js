@@ -1,5 +1,6 @@
 import express from 'express';
 import mongoose from 'mongoose';
+import { rateLimit } from 'express-rate-limit';
 import userRouter from './features/users/users.routes.js';
 
 mongoose
@@ -9,6 +10,19 @@ mongoose
 
 const app = express();
 app.use(express.json());
+
+const limiter = rateLimit({
+  windowMs: 10 * 60 * 1000, // 10 minutes
+  limit: 10, // Limit each IP to 100 requests per `window` (here, per 15 minutes).
+  standardHeaders: 'RateLimit-*', // draft-6: `RateLimit-*` headers; draft-7: combined `RateLimit` header
+  legacyHeaders: true, // Disable the `X-RateLimit-*` headers.
+  message: {
+    message: 'You have exceeded the API limit. Please contact admin',
+  },
+});
+
+// Apply the rate limiting middleware to all requests.
+app.use(limiter);
 app.use('/users', userRouter);
 
 // Start the server
