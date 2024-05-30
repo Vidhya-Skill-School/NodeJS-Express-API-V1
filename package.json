@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon ./src/app3.js",
+    "dev": "nodemon ./src/main.js",
     "lint": "eslint --ext .js ./src/",
     "prepare": "husky"
   },
@@ -14,6 +15,7 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.18.3",
+    "express-rate-limit": "^7.2.0",
     "express-timeout-handler": "^2.2.2",
     "mongoose": "^8.3.2",
     "uuid": "^9.0.1"
