@@ -23,6 +23,11 @@ const limiter = rateLimit({
 
 // Apply the rate limiting middleware to all requests.
 app.use(limiter);
+
+app.get('/', (req, res) => {
+  res.send('Hello World');
+});
+
 app.use('/users', userRouter);
 
 // Start the server
