@@ -24,8 +24,10 @@ const limiter = rateLimit({
 // Apply the rate limiting middleware to all requests.
 // app.use(limiter);
 
+let counter = 1;
 app.get("/", (req, res) => {
-  console.log("Request Inside My Instance")
+  console.log("Request Inside My Instance: ", counter)
+  counter++
   res.json({ message: "Welcome to 75 Days of DevOps Server" });
 });
 
