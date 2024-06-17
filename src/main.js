@@ -22,7 +22,7 @@ const limiter = rateLimit({
 });
 
 // Apply the rate limiting middleware to all requests.
-app.use(limiter);
+// app.use(limiter);
 
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to 75 Days of DevOps Server" });
