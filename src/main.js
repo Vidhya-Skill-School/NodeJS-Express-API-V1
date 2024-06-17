@@ -25,6 +25,7 @@ const limiter = rateLimit({
 // app.use(limiter);
 
 app.get("/", (req, res) => {
+  console.log("Request Inside My Instance")
   res.json({ message: "Welcome to 75 Days of DevOps Server" });
 });
 
