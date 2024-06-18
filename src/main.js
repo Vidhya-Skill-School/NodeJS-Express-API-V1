@@ -3,10 +3,11 @@ import mongoose from "mongoose";
 import { rateLimit } from "express-rate-limit";
 import userRouter from "./features/users/users.routes.js";
 
-mongoose
+/*mongoose
   .connect("mongodb://127.0.0.1:27017/myecommerce")
   .then(() => console.log("DB connection successful"))
   .catch((err) => console.log("DB connection failed: ", err));
+  */
 
 const app = express();
 app.use(express.json());
